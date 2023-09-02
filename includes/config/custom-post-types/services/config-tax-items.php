@@ -1,6 +1,6 @@
 <?php
 
-$tax_name = 'category_services';
+$tax_name = 'httfox_category_services';
 
 $args = [
   'title' => 'Novos projetos',

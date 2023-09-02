@@ -1,21 +1,21 @@
 <?php
-$cpt_slug_id = 'general_information';
+$cpt_slug_id = 'httfox_information';
 
 /*
  * =======================================================
  * BEGIN -> Create Single Post
  * @Code runner
  */
-// Post: Contato
-$args_post_contato = [
+// Post: contact
+$args_post_contact = [
   'cpt_slug_id' => $cpt_slug_id,
   'post_title' => 'Contato',
-  'post_slug' => 'contato',
+  'post_slug' => 'contact',
+  'database_key' => $cpt_slug_id . '_contact',
 ];
 
-$create_post_contato = new httfox_create_single_post_in_post_type($args_post_contato);
-$id_post_contato = $create_post_contato->create_post();
-
+$create_post_contact = new httfox_create_single_post_in_post_type($args_post_contact);
+$id_post_contact = $create_post_contact->create_post();
 
 
 /*
@@ -23,9 +23,9 @@ $id_post_contato = $create_post_contato->create_post();
  * BEGIN -> Acf config Group and Fields
  * @Code runner
  */
-// Post: Contato
-if ($id_post_contato) {
-  $acf_general_contact_group_key = 'acf_group_general_information_contact_general';
+// Post: contact
+if ($id_post_contact) {
+  $acf_general_contact_group_key = 'acf_group_cpt_general_information_contact';
   
   $args_acf_group_info = [
     'group_key' => $acf_general_contact_group_key, // group key
@@ -34,61 +34,61 @@ if ($id_post_contato) {
       array(
         'key' => 'field_1_tab',
         'label' => 'Geral',
-        'name' => 'general_information_contato_geral',
+        'name' => 'general_information_contact_geral_tab',
         'type' => 'tab',
       ),
       array(
-        'key' => 'field_2_email',
+        'key' => 'field_1_email',
         'label' => 'E-mail',
-        'name' => 'general_information_contato_geral_email',
+        'name' => 'general_information_contact_geral_email',
         'type' => 'email',
         'add_config' => array('placeholder' => 'email_name@empresa.com'),
       ),
       array(
-        'key' => 'field_3_phone',
+        'key' => 'field_1_phone',
         'label' => 'Telefone',
-        'name' => 'general_information_contato_geral_phone',
+        'name' => 'general_information_contact_geral_phone',
         'type' => 'number',
         'add_config' => array('placeholder' => '00000000000'),
       ),
       array(
-        'key' => 'field_3_addres',
+        'key' => 'field_1_addres',
         'label' => 'Endereço',
-        'name' => 'general_information_contato_geral_addres',
+        'name' => 'general_information_contact_geral_addres',
         'type' => 'number',
         'add_config' => array('placeholder' => 'Rua zero, 0. Av Alí perto - Bairro tal, Cidade - RJ / 00000-000'),
       ),
       array(
         'key' => 'field_2_tab',
         'label' => 'Redes sociais',
-        'name' => 'general_information_contato_redes_sociais',
+        'name' => 'general_information_contact_redes_sociais_tab',
         'type' => 'tab',
       ),
       array(
-        'key' => 'field_1_url',
+        'key' => 'field_2_url_1',
         'label' => 'Facebook',
-        'name' => 'general_information_contato_redes_sociais_facebook',
+        'name' => 'general_information_contact_redes_sociais_facebook',
         'type' => 'url',
         'add_config' => array('placeholder' => 'https://'),
       ),
       array(
-        'key' => 'field_2_url',
+        'key' => 'field_2_url_2',
         'label' => 'Instagram',
-        'name' => 'general_information_contato_redes_sociais_instagram',
+        'name' => 'general_information_contact_redes_sociais_instagram',
         'type' => 'url',
         'add_config' => array('placeholder' => 'https://'),
       ),
       array(
-        'key' => 'field_3_url',
+        'key' => 'field_2_url_3',
         'label' => 'Linkedin',
-        'name' => 'general_information_contato_redes_sociais_linkedin',
+        'name' => 'general_information_contact_redes_sociais_linkedin',
         'type' => 'url',
         'add_config' => array('placeholder' => 'https://'),
       ),
       array(
-        'key' => 'field_4_url',
+        'key' => 'field_2_url_4',
         'label' => 'Youtube',
-        'name' => 'general_information_contato_redes_sociais_youtube',
+        'name' => 'general_information_contact_redes_sociais_youtube',
         'type' => 'url',
         'add_config' => array('placeholder' => 'https://'),
       ),
@@ -100,7 +100,7 @@ if ($id_post_contato) {
       [ // e
         'param' => 'post',
         'operator' => '==',
-        'value' => $id_post_contato,
+        'value' => $id_post_contact,
       ],
     ],
   ];

@@ -11,15 +11,13 @@ if( ! class_exists( 'httFox_create_custom_post_types' ) ){
     private $icon;
 
     public function __construct( $args ) {
-      [
-        $this->id,
-        $this->plural_name,
-        $this->singular_name,
-        $this->arr_rewrite,
-        $this->capability,
-        $this->arr_supports,
-        $this->icon
-      ] = $args;
+      $this->id = $args['cpt_name_id'];
+      $this->plural_name = $args['plural_name'];
+      $this->singular_name = $args['singular_name'];
+      $this->arr_rewrite = $args['rewrite'];
+      $this->capability = $args['capability'];
+      $this->arr_supports = $args['supports'];
+      $this->icon = $args['icon']; // https://developer.wordpress.org/resource/dashicons/
 
       add_action( 'init', [ $this, 'httfox_register_cpt' ] );
     }

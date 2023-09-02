@@ -4,7 +4,7 @@
  *
  * Este endpoint permite obter uma lista de serviços.
  *
- * @route GET /httfox-api/v1/services
+ * @route GET /httfox-api/v1/depositions
  * @param int $paged Página da lista de serviços (opcional).
  * @param string $category Slug da categoria de serviços (opcional).
  * @return WP_REST_Response|array Retorna um array com informações sobre os serviços ou um erro caso não haja serviços encontrados.
@@ -15,44 +15,20 @@ $path_help = '/includes/helps/';
 require_once HTTFOX_DIRECTORY . $path_help . 'simple-validation-api-per-http-referer.php';
 require_once HTTFOX_DIRECTORY . $path_help . 'check-acf-active.php';
 
-function httfox_api_get_services($request) {
+function httfox_api_get_depositions($request) {
   $can_access = simple_validation_api_per_http_referer();
 
   if ($can_access !== true) {
     return rest_ensure_response( $can_access );
   }
 
-  $cpt_name_id = 'httfox_services';
-  $tax_name_id = 'httfox_category_services';
   $paged = !empty($request['paged']) ? $request['paged'] : 1;
-  $category = !empty($request['category']) ? $request['category'] : null;
 
   $args = array(
-    'post_type' => $cpt_name_id,
-    'posts_per_page' => 6,
+    'post_type' => 'httfox_depositions',
+    'posts_per_page' => 4,
     'paged' => $paged,
   );
-
-  if ($category) {
-    $args['tax_query'] = array(
-      array(
-        'taxonomy' => $tax_name_id,
-        'field' => 'slug',
-        'terms' => $category,
-      ),
-    );
-  }
-
-  $terms = get_terms($tax_name_id);
-  $term_list = [];
-  if (!empty($terms) && !is_wp_error($terms)) {
-    var_dump(0);
-    $count = 0;
-    foreach ($terms as $term) {
-      $term_list[$count] = $term->slug;
-      $count++;
-    }
-  }
 
   $query = new WP_Query($args);
 
@@ -64,16 +40,17 @@ function httfox_api_get_services($request) {
       $post = $query->post;
       
       $post_id = $post->ID;
-      $attachment_img = get_the_post_thumbnail_url($post_id, 'full');
       $total_pages = $query->max_num_pages;
 
-      $response['categories'] = $term_list;
       $response['total_pages'] = $total_pages;
-      $response['services'][$count] = [
+      $response['depositions'][$count] = [
         'id'      => $post_id,
         'slug' => $post->post_name,
         'title' => $post->post_title,
-        'attachment_img' => $attachment_img,
+        'content' => get_field('httfox_depositions_deposition', $post_id),
+        'author' => get_field('httfox_depositions_author', $post_id),
+        'company' => get_field('httfox_depositions_company', $post_id),
+        'website_url' => get_field('httfox_depositions_website', $post_id),
       ];
       $count++;
     }
@@ -86,17 +63,17 @@ function httfox_api_get_services($request) {
   return rest_ensure_response( $response );
 }
 
-function httfox_register_route_api_get_services() {
+function httfox_register_route_api_get_depositions() {
   $configRoutes = [
     'methods' => WP_REST_Server::READABLE,
-    'callback' => 'httfox_api_get_services'
+    'callback' => 'httfox_api_get_depositions'
   ];
 
-  register_rest_route(HTTFOX_API_VERSION_V1, '/services', $configRoutes);
+  register_rest_route(HTTFOX_API_VERSION_V1, '/depositions', $configRoutes);
 }
 
 if (httfox_acf_check()) {
-  add_action('rest_api_init', 'httfox_register_route_api_get_services');
+  add_action('rest_api_init', 'httfox_register_route_api_get_depositions');
 }
 
 ?>

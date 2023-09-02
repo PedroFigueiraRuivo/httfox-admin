@@ -10,21 +10,19 @@ if( ! class_exists( 'httFox_create_custom_taxonomy' ) ){
     private $arr_rewrite;
 
     public function __construct( $args ) {
-      [
-        $this->id,
-        $this->post_type_id,
-        $this->plural_name,
-        $this->singular_name,
-        $this->hierarchical,
-        $this->arr_rewrite,
-      ] = $args;
+      $this->id = $args['tax_name_id'];
+      $this->post_type_id = $args['cpt_name_id'];
+      $this->plural_name = $args['plural_name'];
+      $this->singular_name = $args['singular_name'];
+      $this->hierarchical = $args['hierarchical'];
+      $this->arr_rewrite = $args['rewrite'];
 
       add_action( 'init', [ $this, 'httfox_create_custom_taxonomia' ] );
     }
 
     public function httfox_create_custom_taxonomia() {
       $labels = array(
-          'name'                       => $this->singular_name,
+          'name'                       => 'httfox_' . $this->singular_name,
           'singular_name'              => $this->singular_name,
           'search_items'               => 'Buscar ' . $this->plural_name,
           'all_items'                  => 'Todas os ' . $this->plural_name,

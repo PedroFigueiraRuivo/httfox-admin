@@ -33,6 +33,11 @@ if( ! defined( 'HTTFOX_REST_URL_PREFIX' ) ){
   define('HTTFOX_REST_URL_PREFIX', 'httfox_api');
 }
 
+if( ! defined( 'HTTFOX_DATABASE_TABLE_NAME' ) ){
+  global $wpdb;
+  define('HTTFOX_DATABASE_TABLE_NAME', $wpdb->prefix . 'httFox');
+}
+
 if( ! defined( 'HTTFOX_API_VALID_URLS' ) ){
   define('HTTFOX_API_VALID_URLS', [
     'http://localhost/adm.httfox.com/',
@@ -44,6 +49,15 @@ if( ! defined( 'HTTFOX_API_VALID_URLS' ) ){
 
 /*
  * =======================================================
+ * BEGIN -> DB config
+ * @Code runner
+ */
+require_once (HTTFOX_DIRECTORY . '/includes/config/data-base.php');
+// END -> DB config
+
+
+/*
+ * =======================================================
  * BEGIN -> ACF Config
  * @Code runner
  */
@@ -51,12 +65,12 @@ require_once (HTTFOX_DIRECTORY . '/includes/config/acf.php');
 // END -> ACF Config
 
 
-
 /*
  * =======================================================
  * BEGIN -> Class Imports
  * @Code static
  */
+require_once (HTTFOX_DIRECTORY . '/includes/class/add-item-on-table-database.php');
 require_once (HTTFOX_DIRECTORY . '/includes/class/register-custom-post-types.php');
 require_once (HTTFOX_DIRECTORY . '/includes/class/register-custom-taxonomy.php');
 require_once (HTTFOX_DIRECTORY . '/includes/class/register-custom-taxonomy-item.php');
@@ -89,12 +103,9 @@ require_once ($path_config  . 'add-duplicate-posts.php');
 $path_config_cpts = HTTFOX_DIRECTORY . '/includes/config/custom-post-types/';
 
 require_once ($path_config_cpts  . 'general-information/general-information.php');
-// require_once ($path_config_cpts  . 'common-questions.php');
-// require_once ($path_config_cpts  . 'depositions.php');
-// require_once ($path_config_cpts  . 'plans.php');
 require_once ($path_config_cpts  . 'services/services.php');
-// require_once ($path_config_cpts  . 'project-steps.php');
-// require_once ($path_config_cpts  . 'differentials.php');
+require_once ($path_config_cpts  . 'depositions/depositions.php');
+require_once ($path_config_cpts  . 'portfolio/portfolio.php');
 // END -> Config CPTs
 
 

@@ -9,6 +9,8 @@ Tema WordPress para gerenciar backend do site e sistemas da httfox
 
 [![6.0 wp_version](https://img.shields.io/badge/wp_version-^6.0-skyblue.svg)](https://choosealicense.com/licenses/mit/)
 
+[![6.0.7 acf_version](https://img.shields.io/badge/acf_version-^6.0.7-green.svg)](https://choosealicense.com/licenses/mit/)
+
 
 # Endpoint de Serviços
 

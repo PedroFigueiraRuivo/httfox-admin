@@ -50,6 +50,7 @@ if(!class_exists('httfox_register_acf_groups_fields')) {
         $field = $fields[$i];
 
         $key = !empty($field['key']) ? $this->group_key . '_' . $field['key'] : null;
+        // $name = !empty($field['name']) ? $this->group_key . '_' . $field['name'] : null;
         $name = $field['name'] ?? null;
         $type = $field['type'] ?? null;
         $field['label'] = $this->validate_array_keys('label', $field, $name);
