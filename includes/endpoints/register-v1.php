@@ -8,4 +8,6 @@ require_once ($path . 'get-differentials.php');
 require_once ($path . 'get-common-questions.php');
 require_once ($path . 'get-depositions.php');
 require_once ($path . 'get-portfolio.php');
+require_once ($path . 'get-success-stories.php');
+require_once ($path . 'post-send-mails.php');
 ?>

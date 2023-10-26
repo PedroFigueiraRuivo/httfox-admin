@@ -25,67 +25,65 @@ $id_new_post_differentials = $create_new_post_differentials->create_post();
  */
 // Post: Differentials
 if ($id_new_post_differentials) {
-  $acf_differentials_group_key = 'acf_group_cpt_general_information_differentials';
-  
-  $args_acf_group_info_differentials = [
-    'group_key' => $acf_differentials_group_key, // group key
-    'group_title' => 'Diferenciais', // title section
-    'group_fields'  => array(
+  $group_key_path = 'httfox_acf_group_general_information_differentials';
+  $group_name_path = 'general_information_differentials';
+
+  // Section - Results
+  acf_add_local_field_group(array(
+    'key' => $group_key_path . '_differential',
+    'title' => 'Cadastro geral de diferenciais',
+    'fields' => array(
       array(
-        'key' => 'field_1_repeater',
-        'label' => 'Lista de diferenciais',
-        'name' => 'general_information_differential_repeater',
+        'key' => $group_key_path . '_differential' . '_field_0',
+        'label' => 'Diferenciais',
+        'name' => $group_name_path . 'commom_questions_list',
         'type' => 'repeater',
-        'add_config' => array(
-          'sub_fields' => array(
-            array(
-              'key' => 'field_1_title',
-              'label' => 'título',
-              'name' => 'general_information_differential_title',
-              'type' => 'text',
-              'required' => 1,
-            ),
-            array(
-              'key' => 'field_1_excerpt',
-              'label' => 'Resumo',
-              'name' => 'general_information_differential_excerpt',
-              'type' => 'textarea',
-              'rows' => 2,
-              'required' => 1,
-            ),
-            array(
-              'key' => 'field_1_image',
-              'label' => 'Imagem destacada',
-              'name' => 'general_information_differential_thumbnail',
-              'type' => 'image',
-              'required' => 1,
-            ),
-            array(
-              'key' => 'field_1_note',
-              'label' => 'Nota',
-              'name' => 'general_information_differential_note',
-              'type' => 'text',
-            ),
+        'layout' => 'row',
+        'collapsed' => $group_key_path . '_differential' . '_field_1',
+        'min' => 4,
+        'max' => 6,
+        'sub_fields' => array(
+          array(
+            'key' => $group_key_path . '_differential' . '_field_1',
+            'label' => 'Título',
+            'name' => $group_name_path . '_differential_title',
+            'type' => 'text',
+            'required' => 1,
           ),
-          'collapsed' => 'field_1_title', // Campo que será exibido como título para cada repetição
-          'min' => 1, // Número mínimo de repetições
-          'layout' => 'block', // Layout das repetições (table ou block)
+          array(
+            'key' => $group_key_path . '_differential' . '_field_2',
+            'label' => 'Descrição',
+            'name' => $group_name_path . '_differential_description',
+            'type' => 'textarea',
+            'rows' => 2,
+            'required' => 1,
+          ),
+          array(
+            'key' => $group_key_path . '_differential' . '_field_3',
+            'label' => 'Anotação',
+            'name' => $group_name_path . '_differential_note',
+            'type' => 'text',
+          ),
+          array(
+            'key' => $group_key_path . '_differential' . '_field_4',
+            'label' => 'Imagem',
+            'name' => $group_name_path . '_differential_image',
+            'type' => 'file',
+            'required' => 1,
+          ),
         ),
       ),
     ),
-  ];
-  
-  $args_acf_group_location_differentials = [ // rules
-    [ // ou
-      [ // e
-        'param' => 'post',
-        'operator' => '==',
-        'value' => $id_new_post_differentials,
-      ],
-    ],
-  ];
-  
-  $acf_register_group_differentials_infos = new httfox_register_acf_groups_fields($args_acf_group_info_differentials, $args_acf_group_location_differentials);
+    'location' => array(
+      array(
+        array(
+          'param' => 'post',
+          'operator' => '==',
+          'value' => $id_new_post_differentials,
+        ),
+      ),
+    ),
+  ));
 }
 
 ?>

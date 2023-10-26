@@ -1,16 +1,8 @@
 <?php
-/**
- * Endpoint para obter serviços.
- *
- * Este endpoint permite obter uma lista de serviços.
- *
- * @route GET /httfox-api/v1/differentials
- * @return WP_REST_Response|array Retorna um array com informações sobre os serviços ou um erro caso não haja serviços encontrados.
- */
- 
 $path_help = '/includes/helps/';
 require_once HTTFOX_DIRECTORY . $path_help . 'simple-validation-api-per-http-referer.php';
 require_once HTTFOX_DIRECTORY . $path_help . 'check-acf-active.php';
+require_once HTTFOX_DIRECTORY . $path_help . 'define-init-and-limit-for-loops.php';
 
 function httfox_api_get_differentials($request) {
   $can_access = simple_validation_api_per_http_referer();
@@ -42,21 +34,38 @@ function httfox_api_get_differentials($request) {
     return new WP_Error( 'not_found', 'There are no registered posts', array( 'status' => 404 ) );
   }
 
+  // Gerwnciamento de parâmetros para a listagem
+  $total_items = sizeof($repeater_items);
+  $itens_per_page = !empty($request['itens_per_page']) ? $request['itens_per_page'] : 0;
+  $total_pages = $itens_per_page ? ceil($total_items / $itens_per_page) : 0;
+  $paged = $request['paged'];
+  
+  if (!empty($paged)){
+    if ($paged > $total_pages) $paged = $total_pages;
+  }
+  else $paged = 1;
+
+  list($init, $limit) = define_init_and_limits_for_loops($paged, $total_items, $total_pages, $itens_per_page);
+  
   $reponse = [
-    'total_items' => sizeof($repeater_items),
+    'total_items' => $total_items,
+    'total_pages' => $total_pages,
+    'paged' => $paged,
   ];
   
   $count = 0;
-  foreach ($repeater_items as $item) {
+  for ($i = $init; $i <= $limit; $i++) {
+    $item = $repeater_items[$i];
     $note = empty(!$item['general_information_differential_note']) ? $item['general_information_differential_note'] : false;
-
+    
     $reponse['differentials'][$count] = [
+      'id_on_page' => $i,
       'title' => $item['general_information_differential_title'],
       'excerpt' => $item['general_information_differential_excerpt'],
       'thumbnail' => $item['general_information_differential_thumbnail']['url'],
       'note' => $note,
     ];
-
+  
     $count++;
   }
 

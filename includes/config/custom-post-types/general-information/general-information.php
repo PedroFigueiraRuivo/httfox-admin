@@ -24,5 +24,6 @@ $cpt_general_information = new httFox_create_custom_post_types($args_cpt);
 require_once($path_general_information . 'config-post-contact.php');
 require_once($path_general_information . 'config-post-common-questions.php');
 require_once($path_general_information . 'config-post-differentials.php');
+// require_once($path_general_information . 'config-post-appearance.php');
 
 ?>

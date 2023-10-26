@@ -25,87 +25,103 @@ $id_post_contact = $create_post_contact->create_post();
  */
 // Post: contact
 if ($id_post_contact) {
-  $acf_general_contact_group_key = 'acf_group_cpt_general_information_contact';
-  
-  $args_acf_group_info = [
-    'group_key' => $acf_general_contact_group_key, // group key
-    'group_title' => 'Informações de contato', // title section
-    'group_fields'  => array(
+  $group_key_path = 'httfox_acf_group_general_information_contac_info';
+  $group_name_path = 'general_information_contac_info';
+
+  acf_add_local_field_group(array(
+    'key' =>  $group_key_path . '_contact',
+    'title' => 'Informações gerais de contato',
+    'fields' => array(
       array(
-        'key' => 'field_1_tab',
-        'label' => 'Geral',
-        'name' => 'general_information_contact_geral_tab',
+        'key' => $group_key_path . '_contact' . '_field_0',
+        'label' => 'Contato',
+        'name' => '',
         'type' => 'tab',
       ),
       array(
-        'key' => 'field_1_email',
+        'key' => $group_key_path . '_contact' . '_field_1',
         'label' => 'E-mail',
-        'name' => 'general_information_contact_geral_email',
+        'name' => $group_name_path . '_contact_email',
         'type' => 'email',
-        'add_config' => array('placeholder' => 'email_name@empresa.com'),
+        'required' => 1,
+        'placeholder' => 'seu_nome@email.com',
       ),
       array(
-        'key' => 'field_1_phone',
+        'key' => $group_key_path . '_contact' . '_field_2',
         'label' => 'Telefone',
-        'name' => 'general_information_contact_geral_phone',
+        'name' => $group_name_path . '_contact_phone',
         'type' => 'number',
-        'add_config' => array('placeholder' => '00000000000'),
+        'required' => 1,
+        'instructions' => 'Adicione apenas o número, sem espaços ou caracteres iniciais. Esse item servirá para gerar o link automático de contato. (adicione o código do país na frente)',
       ),
       array(
-        'key' => 'field_1_addres',
+        'key' => $group_key_path . '_contact' . '_field_3',
+        'label' => 'Telefone - visulização',
+        'name' => $group_name_path . '_contact_phone_view',
+        'type' => 'text',
+        'required' => 1,
+        'placeholder' => '(00) 0.0000-0000',
+      ),
+      array(
+        'key' => $group_key_path . '_contact' . '_field_4',
         'label' => 'Endereço',
-        'name' => 'general_information_contact_geral_addres',
-        'type' => 'number',
-        'add_config' => array('placeholder' => 'Rua zero, 0. Av Alí perto - Bairro tal, Cidade - RJ / 00000-000'),
+        'name' => $group_name_path . '_contact_address',
+        'type' => 'textarea',
+        'required' => 1,
+        'rows' => 2,
       ),
       array(
-        'key' => 'field_2_tab',
+        'key' => $group_key_path . '_contact' . '_field_5',
         'label' => 'Redes sociais',
-        'name' => 'general_information_contact_redes_sociais_tab',
+        'name' => '',
         'type' => 'tab',
       ),
       array(
-        'key' => 'field_2_url_1',
+        'key' => $group_key_path . '_contact' . '_field_6',
         'label' => 'Facebook',
-        'name' => 'general_information_contact_redes_sociais_facebook',
+        'name' => $group_name_path . '_contact_facebook',
+        'placeholder' => 'https://',
         'type' => 'url',
-        'add_config' => array('placeholder' => 'https://'),
       ),
       array(
-        'key' => 'field_2_url_2',
+        'key' => $group_key_path . '_contact' . '_field_7',
         'label' => 'Instagram',
-        'name' => 'general_information_contact_redes_sociais_instagram',
+        'name' => $group_name_path . '_contact_instagram',
+        'placeholder' => 'https://',
         'type' => 'url',
-        'add_config' => array('placeholder' => 'https://'),
       ),
       array(
-        'key' => 'field_2_url_3',
-        'label' => 'Linkedin',
-        'name' => 'general_information_contact_redes_sociais_linkedin',
-        'type' => 'url',
-        'add_config' => array('placeholder' => 'https://'),
-      ),
-      array(
-        'key' => 'field_2_url_4',
+        'key' => $group_key_path . '_contact' . '_field_9',
         'label' => 'Youtube',
-        'name' => 'general_information_contact_redes_sociais_youtube',
+        'name' => $group_name_path . '_contact_youtube',
+        'placeholder' => 'https://',
         'type' => 'url',
-        'add_config' => array('placeholder' => 'https://'),
+      ),
+      array(
+        'key' => $group_key_path . '_contact' . '_field_10',
+        'label' => 'WhatsApp',
+        'name' => $group_name_path . '_contact_whatsapp',
+        'placeholder' => 'https://',
+        'type' => 'url',
+      ),
+      array(
+        'key' => $group_key_path . '_contact' . '_field_11',
+        'label' => 'Linkedin',
+        'name' => $group_name_path . '_contact_linkedin',
+        'placeholder' => 'https://',
+        'type' => 'url',
       ),
     ),
-  ];
-  
-  $args_acf_group_location = [ // rules
-    [ // ou
-      [ // e
-        'param' => 'post',
-        'operator' => '==',
-        'value' => $id_post_contact,
-      ],
-    ],
-  ];
-  
-  $acf_register_group_contact_infos = new httfox_register_acf_groups_fields($args_acf_group_info, $args_acf_group_location);
+    'location' => array(
+      array(
+        array(
+          'param' => 'post',
+          'operator' => '==',
+          'value' => $id_post_contact,
+        ),
+      ),
+    ),
+  ));
 }
 
 ?>

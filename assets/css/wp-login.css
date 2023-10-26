@@ -1,0 +1,19 @@
+.language-switcher {
+  display: none;
+}
+
+#login form input {
+  transition: 0.3s;
+}
+
+#login form input:is(:focus, :hover) {
+border-color: #ff6700;
+box-shadow: 0 0 0 1px #ff6700;
+outline: none;
+}
+
+#login form input[type="submit"] {
+  background: #ff6700;
+  background-color: #ff6700;
+  border-color: #ff6700;
+}

@@ -1,16 +1,4 @@
 <?php
-/**
- * Endpoint para obter serviços.
- *
- * Este endpoint permite obter uma lista de serviços.
- *
- * @route GET /httfox-api/v1/depositions
- * @param int $paged Página da lista de serviços (opcional).
- * @param string $category Slug da categoria de serviços (opcional).
- * @return WP_REST_Response|array Retorna um array com informações sobre os serviços ou um erro caso não haja serviços encontrados.
- */
-
- 
 $path_help = '/includes/helps/';
 require_once HTTFOX_DIRECTORY . $path_help . 'simple-validation-api-per-http-referer.php';
 require_once HTTFOX_DIRECTORY . $path_help . 'check-acf-active.php';
@@ -23,10 +11,11 @@ function httfox_api_get_depositions($request) {
   }
 
   $paged = !empty($request['paged']) ? $request['paged'] : 1;
+  $itens_per_page = !empty($request['itens_per_page']) ? $request['itens_per_page'] : 0;
 
   $args = array(
     'post_type' => 'httfox_depositions',
-    'posts_per_page' => 4,
+    'posts_per_page' => $itens_per_page,
     'paged' => $paged,
   );
 
@@ -42,22 +31,24 @@ function httfox_api_get_depositions($request) {
       $post_id = $post->ID;
       $total_pages = $query->max_num_pages;
 
+      $response['paged'] = $paged;
       $response['total_pages'] = $total_pages;
       $response['depositions'][$count] = [
         'id'      => $post_id,
         'slug' => $post->post_name,
         'title' => $post->post_title,
-        'content' => get_field('httfox_depositions_deposition', $post_id),
-        'author' => get_field('httfox_depositions_author', $post_id),
-        'company' => get_field('httfox_depositions_company', $post_id),
-        'website_url' => get_field('httfox_depositions_website', $post_id),
+        'content' => get_field('depositions_deposition_deposition', $post_id),
+        'author' => get_field('depositions_deposition_author', $post_id),
+        'company' => get_field('depositions_deposition_company', $post_id),
+        'website_url' => get_field('depositions_deposition_website_url', $post_id),
       ];
       $count++;
     }
 
+    $response['total_items'] = $query->found_posts;
     wp_reset_postdata();
   } else {
-    return new WP_Error( 'not_found', 'Nenhum serviço encontrado', array( 'status' => 404 ) );
+    return new WP_Error( 'not_found', 'Nenhum depoimento encontrado', array( 'status' => 404 ) );
   }
 
   return rest_ensure_response( $response );

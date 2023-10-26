@@ -1,16 +1,4 @@
 <?php
-/**
- * Endpoint para obter serviços.
- *
- * Este endpoint permite obter uma lista de serviços.
- *
- * @route GET /httfox-api/v1/portfolio
- * @param int $paged Página da lista de serviços (opcional).
- * @param string $category Slug da categoria de serviços (opcional).
- * @return WP_REST_Response|array Retorna um array com informações sobre os serviços ou um erro caso não haja serviços encontrados.
- */
-
- 
 $path_help = '/includes/helps/';
 require_once HTTFOX_DIRECTORY . $path_help . 'simple-validation-api-per-http-referer.php';
 require_once HTTFOX_DIRECTORY . $path_help . 'check-acf-active.php';

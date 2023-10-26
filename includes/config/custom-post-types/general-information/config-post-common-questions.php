@@ -19,63 +19,53 @@ $id_post_Common_questions = $create_post_Common_questions->create_post();
 // END -> Create Single Post
 
 
-/*
- * =======================================================
- * BEGIN -> Acf config Group and Fields
- * @Code runner
- */
+
+
 // Post: Peruntas questions
 if ($id_post_Common_questions) {
-  $acf_general_Common_questions_group_key = 'acf_group_cpt_general_information_common_questions';
-  
-  $args_acf_group_info = [
-    'group_key' => $acf_general_Common_questions_group_key, // group key
-    'group_title' => 'Perguntas frequentes', // title section
-    'group_fields'  => array(
+  $group_key_path = 'httfox_acf_group_general_information_common_questions';
+  $group_name_path = 'general_information_common_questions';
+
+  // Section - Results
+  acf_add_local_field_group(array(
+    'key' => $group_key_path . '_commom_question',
+    'title' => 'Informações gerais - Perguntas frequentes',
+    'fields' => array(
       array(
-        'key' => 'field_0_repeater',
-        'label' => 'Lista',
-        'name' => 'general_information_common_questions_repeater',
+        'key' => $group_key_path . '_commom_question' . '_field_0',
+        'label' => 'Perguntas frequentes',
+        'name' => $group_name_path . 'commom_questions_list',
         'type' => 'repeater',
-        'add_config' => array(
-          'sub_fields' => array(
-            array(
-              'key' => 'field_1_question', // Um ID único para o campo secundário
-              'label' => 'Pergunta', // Rótulo do campo secundário
-              'name' => 'general_information_common_questions_question', // Nome do campo secundário
-              'type' => 'text', // Tipo de campo (por exemplo, texto)
-              'required' => 1,
-            ),
-            array(
-              'key' => 'field_2_enswere', // Um ID único para o campo secundário
-              'label' => 'Resposta', // Rótulo do campo secundário
-              'name' => 'general_information_common_questions_enswere', // Nome do campo secundário
-              'type' => 'textarea', // Tipo de campo (por exemplo, texto)
-              'rows' => 5,
-              'required' => 1,
-            ),
-            // Adicione mais campos secundários conforme necessário
+        'required' => 1,
+        'layout' => 'row',
+        'collapsed' => $group_key_path . '_commom_question' . '_field_1',
+        'min' => 2,
+        'sub_fields' => array(
+          array(
+            'key' => $group_key_path . '_commom_question' . '_field_1',
+            'label' => 'Pergunta',
+            'name' => $group_name_path . '_commom_question_question',
+            'type' => 'text',
+            'required' => 1,
           ),
-          'collapsed' => 'field_1_question', // Campo que será exibido como título para cada repetição
-          'min' => 1, // Número mínimo de repetições
-          'layout' => 'table', // Layout das repetições (table ou block)
+          array(
+            'key' => $group_key_path . '_commom_question' . '_field_2',
+            'label' => 'Respoosta',
+            'name' => $group_name_path . '_commom_question_enswere',
+            'type' => 'textarea',
+          ),
         ),
       ),
     ),
-  ];
-  
-  $args_acf_group_location = [ // rules
-    [ // ou
-      [ // e
-        'param' => 'post',
-        'operator' => '==',
-        'value' => $id_post_Common_questions,
-      ],
-    ],
-  ];
-  
-  $acf_register_group_Common_questions_infos = new httfox_register_acf_groups_fields($args_acf_group_info, $args_acf_group_location);
+    'location' => array(
+      array(
+        array(
+          'param' => 'post',
+          'operator' => '==',
+          'value' => $id_post_Common_questions,
+        ),
+      ),
+    ),
+  ));
 }
-// END -> Acf config Group and Fields
-
 ?>

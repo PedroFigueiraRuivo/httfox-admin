@@ -17,6 +17,4 @@ $cpt_services = new httFox_create_custom_post_types($args);
 // Add taxonomys
 require_once($path_services . 'config-taxonomys.php');
 
-// Add single taxonomies
-require_once($path_services . 'config-tax-items.php');
 ?>

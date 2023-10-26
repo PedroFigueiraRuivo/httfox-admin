@@ -18,4 +18,11 @@ add_filter('acf/settings/show_admin', '__return_false');
 // When including the PRO plugin, hide the ACF Updates menu
 add_filter('acf/settings/show_updates', '__return_false', 100);
 
+
+// add custom script to toggle rows
+function httfox_enqueue_custom_admin_scripts() {
+    wp_enqueue_script('meu-script', get_template_directory_uri() . '/assets/js/config-acf-toggle-rows.js', array('jquery'), '1.0', true);
+}
+  
+add_action('admin_enqueue_scripts', 'httfox_enqueue_custom_admin_scripts', 9999999999);
 ?>
