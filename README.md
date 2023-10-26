@@ -9,6 +9,10 @@ Gerenciador backend do site e sistemas da httfox
 
 [![6.0 wp_version](https://img.shields.io/badge/wp_version-^6.0-skyblue.svg)](https://choosealicense.com/licenses/mit/)
 
+[![6.2.1.1 acf_version](https://img.shields.io/badge/acf_version-^6.2.1.1-skyblue.svg)](https://choosealicense.com/licenses/mit/)
+
+(ACF está incluso em includes/plugins)
+
 
 
 # Documentação da API
